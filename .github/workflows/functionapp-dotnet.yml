@@ -21,9 +21,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Build Docker Image
-      run: docker build --no-cache -t jelledruyts/azure-aisearch-functionapp-dotnet:latest -f ./src/Azure.AISearch.FunctionApp.DotNet/Dockerfile ./src/Azure.AISearch.FunctionApp.DotNet
+      run: docker build --no-cache -t pia/azure-aisearch-functionapp-dotnet:latest -f ./src/Azure.AISearch.FunctionApp.DotNet/Dockerfile ./src/Azure.AISearch.FunctionApp.DotNet
     - name: Push Docker Image to GitHub
       run: |
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker tag jelledruyts/azure-aisearch-functionapp-dotnet:latest ghcr.io/jelledruyts/azure-aisearch-functionapp-dotnet:latest
-        docker push ghcr.io/jelledruyts/azure-aisearch-functionapp-dotnet:latest
+        docker tag pia/azure-aisearch-functionapp-dotnet:latest ghcr.io/pia/azure-aisearch-functionapp-dotnet:latest
+        docker push ghcr.io/pia/azure-aisearch-functionapp-dotnet:latest
