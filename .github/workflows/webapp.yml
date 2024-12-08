@@ -24,7 +24,7 @@ jobs:
       run: docker build --no-cache --build-arg app_version=1.0.$GITHUB_RUN_NUMBER --build-arg source_version=$GITHUB_SHA -t pia/azure-aisearch-webapp:latest -f ./src/Azure.AISearch.WebApp/Dockerfile ./src/Azure.AISearch.WebApp
     - name: Push Docker Image to GitHub
       run: |
-        echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login ghcr.io -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        echo "${{ secrets.DOCKER_TOKEN }}" | docker login ghcr.io -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
         docker tag pia/azure-aisearch-webapp:latest ghcr.io/pia/azure-aisearch-webapp:latest
         docker push ghcr.io/pia/azure-aisearch-webapp:latest
 
