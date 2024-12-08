@@ -9,6 +9,13 @@ Key changes:
 
 ## Deploying this template 
 
+### Building the apps
+
+The apps will need to be built and pushed to Dockerhub, as they include steps to configure services. This build
+can be found by going into 'Actions' in GitHub and manually triggering the builds one-by-one.
+
+### Deploy components
+
 You can use the button as displayed in GitHub, or ...
 
 If you install Azure CLI, these templates can be deoplyed with ...
@@ -23,8 +30,6 @@ Be sure to use a test resource group like `rg-ai4i-test-eus2-001`, for example .
 `az deployment group create --resource-group  rg-ai4i-test-eus2-001 --template-file search/search_stack.json`
 
 # ORIGINAL README ...
-
-
 
 # Azure AI Search Lab
 
