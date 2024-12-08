@@ -18,7 +18,7 @@ can be found by going into 'Actions' in GitHub and manually triggering the build
 
 You can use the button as displayed in GitHub ...
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjelledruyts%2Fazure-ai-search-lab%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fastrobagel%2Fazure-ai-search-lab%2Fmain%2Fazuredeploy.json)
 
 
 Or ...
