@@ -24,7 +24,7 @@ jobs:
       run: docker build --no-cache -t pia/azure-aisearch-functionapp-python:latest -f ./src/Azure.AISearch.FunctionApp.Python/Dockerfile ./src/Azure.AISearch.FunctionApp.Python
     - name: Push Docker Image to GitHub
       run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker tag pia/azure-aisearch-functionapp-python:latest ghcr.io/pia/azure-aisearch-functionapp-python:latest
         docker tag pia/azure-aisearch-functionapp-python:latest ghcr.io/pia/azure-aisearch-functionapp:latest
         docker push ghcr.io/pia/azure-aisearch-functionapp-python:latest
