@@ -22,7 +22,7 @@ Be sure to use a test resource group like `rg-ai4i-test-eus2-001`, for example .
 
 `az deployment group create --resource-group  rg-ai4i-test-eus2-001 --template-file search/search_stack.json`
 
-# ==================== ORIGINAL README ===============
+# ORIGINAL README ...
 
 
 
