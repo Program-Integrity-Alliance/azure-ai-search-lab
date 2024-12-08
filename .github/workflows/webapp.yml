@@ -43,5 +43,5 @@ jobs:
         tags: index.docker.io/${{ secrets.DOCKER_USERNAME }}/azure-aisearch-webapp:latest
         file: ./src/Azure.AISearch.WebApp/Dockerfile 
         build-args: |
-          app_version=1.0.$GITHUB_RUN_NUMBER
-          source_version=$GITHUB_SHA
+          app_version=1.0.${{ GITHUB_RUN_NUMBER }}
+          source_version=${{ GITHUB_SHA }}
