@@ -23,12 +23,12 @@
         "gptModelName": {
             "type": "String",
             "minLength": 1,
-            "defaultValue": "gpt-35-turbo"
+            "defaultValue": "gpt-4o-mini"
         },
         "gptModelVersion": {
             "type": "String",
             "minLength": 1,
-            "defaultValue": "0301"
+            "defaultValue": "2024-07-18"
         },
         "searchServiceSku": {
             "type": "String",
@@ -135,7 +135,7 @@
             ],
             "sku": {
                 "name": "Standard",
-                "capacity": 50
+                "capacity": 8
             },
             "properties": {
                 "model": {
@@ -155,7 +155,7 @@
             ],
             "sku": {
                 "name": "Standard",
-                "capacity": 50
+                "capacity": 8
             },
             "properties": {
                 "model": {
@@ -172,7 +172,7 @@
             "location": "[resourceGroup().location]",
             "kind": "linux",
             "sku": {
-                "Name": "EP1"
+                "Name": "B1"
             },
             "properties": {
                 "reserved": true
@@ -192,7 +192,7 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('functionPlanName'))]",
                 "siteConfig": {
-                    "linuxFxVersion": "DOCKER|ghcr.io/jelledruyts/azure-aisearch-functionapp-python:latest",
+                    "linuxFxVersion": "DOCKER|ghcr.io/pia/azure-aisearch-functionapp-python:latest",
                     "appSettings": [
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
@@ -260,7 +260,7 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('functionPlanName'))]",
                 "siteConfig": {
-                    "linuxFxVersion": "DOCKER|ghcr.io/jelledruyts/azure-aisearch-functionapp-dotnet:latest",
+                    "linuxFxVersion": "DOCKER|ghcr.io/pia/azure-aisearch-functionapp-dotnet:latest",
                     "appSettings": [
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
@@ -363,7 +363,7 @@
                 "clientAffinityEnabled": false,
                 "httpsOnly": true,
                 "siteConfig": {
-                    "linuxFxVersion": "DOCKER|ghcr.io/jelledruyts/azure-aisearch-webapp",
+                    "linuxFxVersion": "DOCKER|ghcr.io/pia/azure-aisearch-webapp",
                     "alwaysOn": true,
                     "appSettings": [
                         {

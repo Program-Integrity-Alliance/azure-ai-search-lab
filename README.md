@@ -1,3 +1,31 @@
+# Introduction
+
+This repo is a fork of [this](https://github.com/jelledruyts/azure-ai-search-lab) Azure AI search lab, modified for PIA.
+
+Key changes:
+
+1. Template changes to account for quotas
+2. Github actions to push application builds to to PIA Docker and to use those
+
+## Deploying this template 
+
+You can use the button as displayed in GitHub, or ...
+
+If you install Azure CLI, these templates can be deoplyed with ...
+
+```
+az login
+az deployment group create --resource-group <resource-group-name> --template-file <path-to-template-file>
+```
+
+Be sure to use a test resource group like `rg-ai4i-test-eus2-001`, for example ...
+
+`az deployment group create --resource-group  rg-ai4i-test-eus2-001 --template-file search/search_stack.json`
+
+# ==================== ORIGINAL README ===============
+
+
+
 # Azure AI Search Lab
 
 ## About
