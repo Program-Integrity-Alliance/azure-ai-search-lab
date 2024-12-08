@@ -192,7 +192,7 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('functionPlanName'))]",
                 "siteConfig": {
-                    "linuxFxVersion": "DOCKER|ghcr.io/astrobagel/azure-aisearch-functionapp-python:latest",
+                    "linuxFxVersion": "DOCKER|index.docker.io/astrobagel/azure-aisearch-functionapp-python:latest",
                     "appSettings": [
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
@@ -260,7 +260,7 @@
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('functionPlanName'))]",
                 "siteConfig": {
-                    "linuxFxVersion": "DOCKER|ghcr.io/astrobagel/azure-aisearch-functionapp-dotnet:latest",
+                    "linuxFxVersion": "DOCKER|index.docker.io/astrobagel/azure-aisearch-functionapp-dotnet:latest",
                     "appSettings": [
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
@@ -363,7 +363,7 @@
                 "clientAffinityEnabled": false,
                 "httpsOnly": true,
                 "siteConfig": {
-                    "linuxFxVersion": "DOCKER|ghcr.io/astrobagel/azure-aisearch-webapp",
+                    "linuxFxVersion": "DOCKER|index.docker.io/astrobagel/azure-aisearch-webapp",
                     "alwaysOn": true,
                     "appSettings": [
                         {

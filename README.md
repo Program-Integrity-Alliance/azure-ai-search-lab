@@ -20,12 +20,12 @@ If you install Azure CLI, these templates can be deoplyed with ...
 
 ```
 az login
-az deployment group create --resource-group <resource-group-name> --template-file <path-to-template-file>
+az deployment group create --resource-group rg-ai4i-test-eus2-001 --template-file azuredeploy.json
 ```
 
-Be sure to use a test resource group like `rg-ai4i-test-eus2-001`, for example ...
+If you get an alery about OpenAI quotas, go to 'Azure AI Services' in the Azure portal, click on Azure Open AI, then 'Manage deleted resources' and purge any pending items to clear up quota.
 
-`az deployment group create --resource-group  rg-ai4i-test-eus2-001 --template-file search/search_stack.json`
+**Notes:** At time of writing automatic activation of authentication of the werb app wasn't complete. You should navigate to the component in the Azure portal and set Authentication to the Microsoft identity provider so only people with access to the subscription can log in.
 
 # ORIGINAL README ...
 
