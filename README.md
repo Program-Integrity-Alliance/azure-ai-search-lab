@@ -16,13 +16,6 @@ can be found by going into 'Actions' in GitHub and manually triggering the build
 
 ### Deploy components
 
-You can use the button as displayed in GitHub ...
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fastrobagel%2Fazure-ai-search-lab%2Fmain%2Fazuredeploy.json)
-
-
-Or ...
-
 If you install Azure CLI, these templates can be deoplyed with ...
 
 ```
@@ -121,6 +114,8 @@ This means the following Azure region and model combinations are currently suppo
 | West Europe       | ❌                        | ❌                            | ✅                               | ❌                                   | ✅                                      |
 
 Once you've decided on a region, you can deploy the solution with its default parameters, or change these for your specific needs.
+
+**NOTE** Though this works in the public repo, it won't work in the private PIA repo. See instructions above
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fastrobagel%2Fazure-ai-search-lab%2Fmain%2Fazuredeploy.json)
 
