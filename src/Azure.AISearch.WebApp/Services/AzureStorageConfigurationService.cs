@@ -61,10 +61,10 @@ public class AzureStorageConfigurationService
         var blobClient = this.documentsContainerClient.GetBlobClient(fileName);
         await blobClient.UploadAsync(fileStream, overwrite: true);
 
-        // Set metadata
+        // mjh. Set metadata
         var metadata = new Dictionary<string, string>
         {
-            { "dataSource", "" } 
+            { "data_source", "GAO" } 
         };
         await blobClient.SetMetadataAsync(metadata);
 
