@@ -12,6 +12,10 @@ public class SkillRequestRecordData
     
     [JsonPropertyName("filepath")]
     public string? FilePath { get; set; }
+
+    // mjh
+    [JsonPropertyName("data_source")]
+    public string? DataSource { get; set; }
     
     [JsonPropertyName("title")]
     public string? Title { get; set; }

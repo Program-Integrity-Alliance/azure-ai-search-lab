@@ -95,7 +95,9 @@ public class ChunkEmbedPush
                                 ContentVector = embedding,
                                 SourceDocumentId = record.Data.DocumentId,
                                 SourceDocumentTitle = record.Data.Title,
-                                SourceDocumentFilePath = record.Data.FilePath
+                                SourceDocumentFilePath = record.Data.FilePath,
+                                // mjh
+                                SourceDocumentDataSource = record.Data.DataSource
                             };
                             documentChunks.Add(documentChunk);
                             index++;

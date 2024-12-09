@@ -9,4 +9,6 @@ public class DocumentChunk
     public string? SourceDocumentTitle { get; set; }
     public string? SourceDocumentContentField { get; set; }
     public string? SourceDocumentFilePath { get; set; }
+    // mjh
+    public string? SourceDocumentDataSource { get; set; }
 }

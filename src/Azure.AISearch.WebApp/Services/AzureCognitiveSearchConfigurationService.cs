@@ -175,7 +175,9 @@ public class AzureCognitiveSearchConfigurationService
                 new SearchField(nameof(Document.Id), SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true },
                 new SearchField(nameof(Document.Title), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
                 new SearchField(nameof(Document.Content), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
-                new SearchField(nameof(Document.FilePath), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene }
+                new SearchField(nameof(Document.FilePath), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
+                // mjh
+                new SearchField(nameof(Document.DataSource), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene }
             },
             SemanticSettings = new SemanticSettings
             {
@@ -265,7 +267,9 @@ public class AzureCognitiveSearchConfigurationService
                             new InputFieldMappingEntry(nameof(DocumentChunk.Content)) { Source = $"/document/chunks/*" },
                             new InputFieldMappingEntry(nameof(DocumentChunk.ContentVector)) { Source = $"/document/chunks/*/content_vector" },
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentTitle)) { Source = $"/document/metadata_storage_name" },
-                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentFilePath)) { Source = $"/document/metadata_storage_path" }
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentFilePath)) { Source = $"/document/metadata_storage_path" },
+                            // mjh
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentDataSource)) { Source = $"/document/data_source" }
                         }
                     }
                 }
@@ -298,6 +302,8 @@ public class AzureCognitiveSearchConfigurationService
                     new InputFieldMappingEntry("title") { Source = $"/document/{nameof(Document.Title)}" },
                     // Pass the document file path.
                     new InputFieldMappingEntry("filepath") { Source = $"/document/{nameof(Document.FilePath)}" },
+                    // mjh Pass the data source 
+                    new InputFieldMappingEntry("data_source") { Source = $"/document/{nameof(Document.DataSource)}" },                    
                     // Pass the field name as a string literal.
                     new InputFieldMappingEntry("fieldname") { Source = $"='{nameof(Document.Content)}'" },
                     // Pass the embedding deployment to use as a string literal.
@@ -332,6 +338,8 @@ public class AzureCognitiveSearchConfigurationService
                                         new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentId)) { Source = $"/document/{nameof(Document.Id)}" },
                                         // Map the document file path.
                                         new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentFilePath)) { Source = $"/document/{nameof(Document.FilePath)}" },
+                                        // mjh Map the data source
+                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentDataSource)) { Source = $"/document/{nameof(Document.DataSource)}" },
                                         // Map the document title.
                                         new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentTitle)) { Source = $"/document/{nameof(Document.Title)}" },
                                         // Map the chunked content.
@@ -409,7 +417,9 @@ public class AzureCognitiveSearchConfigurationService
                 new SearchField(nameof(DocumentChunk.ContentVector), SearchFieldDataType.Collection(SearchFieldDataType.Single)) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = true, VectorSearchDimensions = this.settings.OpenAIEmbeddingVectorDimensions, VectorSearchProfile = Constants.ConfigurationNames.VectorSearchProfileNameDefault },
                 new SearchField(nameof(DocumentChunk.SourceDocumentId), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = false },
                 new SearchField(nameof(DocumentChunk.SourceDocumentTitle), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
-                new SearchField(nameof(DocumentChunk.SourceDocumentFilePath), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene }
+                new SearchField(nameof(DocumentChunk.SourceDocumentFilePath), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
+                // mjh
+                new SearchField(nameof(DocumentChunk.SourceDocumentDataSource), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene }
             },
             SemanticSettings = new SemanticSettings
             {

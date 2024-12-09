@@ -110,6 +110,8 @@ public class AzureCognitiveSearchService : ISearchService
         searchOptions.Select.Add(nameof(Document.Id));
         searchOptions.Select.Add(nameof(Document.Title));
         searchOptions.Select.Add(nameof(Document.FilePath));
+        // mjh
+        searchOptions.Select.Add(nameof(Document.DataSource));
         searchOptions.HighlightFields.Add(nameof(Document.Content));
     }
 

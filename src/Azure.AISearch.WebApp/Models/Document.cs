@@ -6,4 +6,6 @@ public class Document
     public string? Title { get; set; }
     public string? Content { get; set; }
     public string? FilePath { get; set; }
+    // mjh
+    public string? DataSource { get; set; }
 }
