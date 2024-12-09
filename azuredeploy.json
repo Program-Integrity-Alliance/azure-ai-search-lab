@@ -68,7 +68,7 @@
         "textEmbedderMinChunkSize": 10,
         "searchIndexNameBlobDocuments": "blob-documents",
         "searchIndexNameBlobChunks": "blob-chunks",
-        "searchIndexerSkillType": "",
+        "searchIndexerSkillType": "pull",
         "searchIndexerScheduleMinutes": 5,
         "defaultSystemRoleInformation": "",
         "defaultCustomOrchestrationPrompt": "",
