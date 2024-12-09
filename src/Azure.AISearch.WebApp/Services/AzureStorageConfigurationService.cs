@@ -54,8 +54,23 @@ public class AzureStorageConfigurationService
 
     public async Task UploadDocumentAsync(Stream fileStream, string fileName)
     {
-        await this.documentsContainerClient.UploadBlobAsync(fileName, fileStream);
+        //await this.documentsContainerClient.UploadBlobAsync(fileName, fileStream);
+        //await fileStream.FlushAsync();
+
+        // Upload the blob
+        var blobClient = this.documentsContainerClient.GetBlobClient(fileName);
+        await blobClient.UploadAsync(fileStream, overwrite: true);
+
+        // Set metadata
+        var metadata = new Dictionary<string, string>
+        {
+            { "dataSource", "" } 
+        };
+        await blobClient.SetMetadataAsync(metadata);
+
+        // Flush the stream
         await fileStream.FlushAsync();
+
     }
 
     public async Task UninitializeAsync()
