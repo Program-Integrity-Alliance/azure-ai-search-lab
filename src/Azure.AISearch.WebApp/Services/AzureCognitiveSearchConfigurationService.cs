@@ -156,7 +156,7 @@ public class AzureCognitiveSearchConfigurationService
                 // Map the file content to the document content.
                 new FieldMapping("content") { TargetFieldName = nameof(Document.Content) },
                 // Map the full blob URL as the document file path.
-                new FieldMapping("metadata_storage_path") { TargetFieldName = nameof(Document.FilePath) }
+                new FieldMapping("metadata_storage_path") { TargetFieldName = nameof(Document.FilePath) },
                 // mjh Map the data source custom metadata field on the blob
                 new FieldMapping("data_source") { TargetFieldName = nameof(Document.DataSource) }
             },
