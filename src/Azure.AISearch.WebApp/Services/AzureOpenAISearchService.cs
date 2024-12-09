@@ -122,8 +122,6 @@ public class AzureOpenAISearchService : ISearchService
                 TitleFieldName = useDocumentsIndex ? nameof(Document.Title) : nameof(DocumentChunk.SourceDocumentTitle),
                 UrlFieldName = useDocumentsIndex ? nameof(Document.FilePath) : nameof(DocumentChunk.SourceDocumentFilePath),
                 FilepathFieldName = useDocumentsIndex ? nameof(Document.FilePath) : nameof(DocumentChunk.SourceDocumentFilePath),
-                // mjh
-                DataSourceFieldName = useDocumentsIndex ? nameof(Document.DataSource) : nameof(DocumentChunk.SourceDocumentDataSource),
                 VectorFieldNames = { useDocumentsIndex ? null : nameof(DocumentChunk.ContentVector) }
             },
             ShouldRestrictResultScope = request.LimitToDataSource, // Limit responses to data from the data source only
