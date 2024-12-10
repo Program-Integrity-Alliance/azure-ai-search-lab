@@ -58,6 +58,7 @@
         "webPlanName": "[concat(parameters('resourcePrefix'), '-', uniquestring(resourceGroup().id), '-web-plan')]",
         "webAppName": "[concat(parameters('resourcePrefix'), '-', uniquestring(resourceGroup().id), '-web-app')]",
         "searchServiceName": "[concat(parameters('resourcePrefix'), '-', uniquestring(resourceGroup().id), '-search')]",
+        "docIntelServiceName": "[concat(parameters('resourcePrefix'), '-', uniquestring(resourceGroup().id), '-docintel')]",
         "openaiApiVersion": "2023-12-01-preview",
         "storageContainerNameBlobDocuments": "blob-documents",
         "storageContainerNameBlobChunks": "blob-chunks",
@@ -163,6 +164,28 @@
                     "name": "[parameters('gptModelName')]",
                     "version": "[parameters('gptModelVersion')]"
                 }
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2024-06-01-preview",
+            "name": "[variables('docIntelServiceName')]",
+            "location": "eastus",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "FormRecognizer",
+            "identity": {
+                "type": "None"
+            },
+            "properties": {
+                "customSubDomainName": "[parameters('accounts_srch_zan63y6zsbmxq_docintel_name')]",
+                "networkAcls": {
+                    "defaultAction": "Allow",
+                    "virtualNetworkRules": [],
+                    "ipRules": []
+                },
+                "publicNetworkAccess": "Enabled"
             }
         },
         {
