@@ -62,6 +62,7 @@
         "openaiApiVersion": "2023-12-01-preview",
         "storageContainerNameBlobDocuments": "blob-documents",
         "storageContainerNameBlobChunks": "blob-chunks",
+        "storageContainerNameBlobInterimFiles": "blob-interim-files",
         "textChunkerPageLength": 2000,
         "textChunkerPageOverlap": 500,
         "textEmbedderNumTokens": 2048,
@@ -434,6 +435,10 @@
                             "value": "[variables('storageContainerNameBlobChunks')]"
                         },
                         {
+                            "name": "StorageContainerNameBlobInterimFiles",
+                            "value": "[variables('storageContainerNameBlobInterimFiles')]"
+                        },
+                        {
                             "name": "TextChunkerPageLength",
                             "value": "[variables('textChunkerPageLength')]"
                         },
@@ -554,6 +559,10 @@
         "storageContainerNameBlobChunks": {
             "type": "string",
             "value": "[variables('storageContainerNameBlobChunks')]"
+        },
+        "storageContainerNameBlobInterimFiles": {
+            "type": "string",
+            "value": "[variables('storageContainerNameBlobInterimFiles')]"
         },
         "textEmbedderFunctionEndpointPython": {
             "type": "string",
