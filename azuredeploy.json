@@ -180,7 +180,7 @@
                 "type": "None"
             },
             "properties": {
-                "customSubDomainName": "[parameters('accounts_srch_zan63y6zsbmxq_docintel_name')]",
+                "customSubDomainName": "[variables('openaiServiceName')]",
                 "networkAcls": {
                     "defaultAction": "Allow",
                     "virtualNetworkRules": [],
