@@ -171,7 +171,6 @@
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2024-06-01-preview",
             "name": "[variables('docIntelServiceName')]",
-            "location": "eastus",
             "sku": {
                 "name": "S0"
             },
