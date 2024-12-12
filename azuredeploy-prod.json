@@ -1,0 +1,652 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourcePrefix": {
+            "type": "String",
+            "minLength": 1
+        },
+        "embeddingModelName": {
+            "type": "String",
+            "minLength": 1,
+            "defaultValue": "text-embedding-ada-002"
+        },
+        "embeddingModelVectorDimensions": {
+            "type": "int",
+            "defaultValue": 1536
+        },
+        "embeddingModelVersion": {
+            "type": "String",
+            "minLength": 1,
+            "defaultValue": "2"
+        },
+        "gptModelName": {
+            "type": "String",
+            "minLength": 1,
+            "defaultValue": "gpt-4o-mini"
+        },
+        "gptModelVersion": {
+            "type": "String",
+            "minLength": 1,
+            "defaultValue": "2024-07-18"
+        },
+        "searchServiceSku": {
+            "type": "String",
+            "minLength": 1,
+            "defaultValue": "basic",
+            "allowedValues": [
+                "basic",
+                "standard",
+                "standard2",
+                "standard3"
+            ]
+        },
+        "initialDocumentUrls": {
+            "type": "String",
+            "defaultValue": "https://azure.microsoft.com/mediahandler/files/resourcefiles/resilience-in-azure-whitepaper/Resiliency-whitepaper.pdf https://azure.microsoft.com/mediahandler/files/resourcefiles/data-residency-data-sovereignty-and-compliance-in-the-microsoft-cloud/Data_Residency_Data_Sovereignty_Compliance_Microsoft_Cloud.pdf"
+        }
+    },
+    "variables": {
+        "logAnalyticsWorkspaceName": "loga-aisearch-prod-eus-02",
+        "applicationInsightsName": "appins-aisearch-prod-eus-02",
+        "storageAccountName": "staisearchprodeus02",
+        "openaiServiceName": "openai-aisearch-prod-eus-02')]",
+        "functionPlanName": "funcplan-aisearch-prod-eus-02",
+        "functionAppNamePython": "func-python-aisearch-prod-eus-02",
+        "functionAppNameDotNet": "func-dotnet-aisearch-prod-eus-02",
+        "functionApiKey": "[concat(uniquestring(resourceGroup().id), '-', uniqueString(deployment().name))]",
+        "webPlanName": "webplan-aisearch-prod-eus-02",
+        "webAppName": "webapp-aisearch-prod-eus-02",
+        "searchServiceName": "srch-aisearch-prod-eus-02",
+        "docIntelServiceName": "docintel-aisearch-prod-eus-02",
+        "openaiApiVersion": "2023-12-01-preview",
+        "storageContainerNameBlobDocuments": "blob-documents",
+        "storageContainerNameBlobChunks": "blob-chunks",
+        "storageContainerNameBlobInterimFiles": "blob-interim-files",
+        "textChunkerPageLength": 2000,
+        "textChunkerPageOverlap": 500,
+        "textEmbedderNumTokens": 2048,
+        "textEmbedderTokenOverlap": 0,
+        "textEmbedderMinChunkSize": 10,
+        "searchIndexNameBlobDocuments": "blob-documents",
+        "searchIndexNameBlobChunks": "blob-chunks",
+        "searchIndexerSkillType": "pull",
+        "searchIndexerScheduleMinutes": 5,
+        "defaultSystemRoleInformation": "",
+        "defaultCustomOrchestrationPrompt": "",
+        "disableUploadDocuments": false,
+        "disableResetSearchConfiguration": false
+    },
+    "resources": [
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "apiVersion": "2021-06-01",
+            "name": "[variables('logAnalyticsWorkspaceName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "sku": {
+                    "name": "PerGB2018"
+                },
+                "retentionInDays": 120
+            }
+        },
+        {
+            "type": "Microsoft.Insights/components",
+            "apiVersion": "2020-02-02",
+            "name": "[variables('applicationInsightsName')]",
+            "location": "[resourceGroup().location]",
+            "kind": "other",
+            "dependsOn": [
+                "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspaceName'))]"
+            ],
+            "properties": {
+                "Application_Type": "web",
+                "Flow_Type": "Bluefield",
+                "WorkspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('logAnalyticsWorkspaceName'))]"
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('storageAccountName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Standard_GRS"
+            },
+            "kind": "StorageV2"
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2021-10-01",
+            "name": "[variables('openaiServiceName')]",
+            "location": "[resourceGroup().location]",
+            "kind": "OpenAI",
+            "sku": {
+                "name": "S0"
+            },
+            "properties": {
+                "customSubDomainName": "[variables('openaiServiceName')]"
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2023-05-01",
+            "name": "[concat(variables('openaiServiceName'), '/', parameters('embeddingModelName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('openaiServiceName'))]"
+            ],
+            "sku": {
+                "name": "Standard",
+                "capacity": 8
+            },
+            "properties": {
+                "model": {
+                    "format": "OpenAI",
+                    "name": "[parameters('embeddingModelName')]",
+                    "version": "[parameters('embeddingModelVersion')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2023-05-01",
+            "name": "[concat(variables('openaiServiceName'), '/', parameters('gptModelName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('openaiServiceName'))]",
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openaiServiceName'), parameters('embeddingModelName'))]"
+            ],
+            "sku": {
+                "name": "Standard",
+                "capacity": 8
+            },
+            "properties": {
+                "model": {
+                    "format": "OpenAI",
+                    "name": "[parameters('gptModelName')]",
+                    "version": "[parameters('gptModelVersion')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2024-06-01-preview",
+            "name": "[variables('docIntelServiceName')]",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "FormRecognizer",
+            "identity": {
+                "type": "None"
+            },
+            "properties": {
+                "customSubDomainName": "[variables('openaiServiceName')]",
+                "networkAcls": {
+                    "defaultAction": "Allow",
+                    "virtualNetworkRules": [],
+                    "ipRules": []
+                },
+                "publicNetworkAccess": "Enabled"
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Web/serverfarms",
+            "name": "[variables('functionPlanName')]",
+            "location": "[resourceGroup().location]",
+            "kind": "linux",
+            "sku": {
+                "Name": "B1"
+            },
+            "properties": {
+                "reserved": true
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Web/sites",
+            "name": "[variables('functionAppNamePython')]",
+            "location": "[resourceGroup().location]",
+            "kind": "functionapp",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('functionPlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[resourceId('Microsoft.Insights/components', variables('applicationInsightsName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('functionPlanName'))]",
+                "siteConfig": {
+                    "linuxFxVersion": "DOCKER|index.docker.io/astrobagel/azure-aisearch-functionapp-python:latest",
+                    "appSettings": [
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~4"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "python"
+                        },
+                        {
+                            "name": "AzureWebJobsFeatureFlags",
+                            "value": "EnableWorkerIndexing"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-09-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-09-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
+                        },
+                        {
+                            "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                            "value": "false"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsightsName')), '2020-02-02').InstrumentationKey]"
+                        },
+                        {
+                            "name": "API_KEY",
+                            "value": "[variables('functionApiKey')]"
+                        },
+                        {
+                            "name": "AZURE_OPENAI_API_KEY",
+                            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('openaiServiceName')), '2021-10-01').key1]"
+                        },
+                        {
+                            "name": "AZURE_OPENAI_API_VERSION",
+                            "value": "[variables('openaiApiVersion')]"
+                        },
+                        {
+                            "name": "AZURE_OPENAI_EMBEDDING_SLEEP_INTERVAL_SECONDS",
+                            "value": "1"
+                        },
+                        {
+                            "name": "AZURE_OPENAI_SERVICE_NAME",
+                            "value": "[variables('openaiServiceName')]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Web/sites",
+            "name": "[variables('functionAppNameDotNet')]",
+            "location": "[resourceGroup().location]",
+            "kind": "functionapp",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('functionPlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[resourceId('Microsoft.Insights/components', variables('applicationInsightsName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('functionPlanName'))]",
+                "siteConfig": {
+                    "linuxFxVersion": "DOCKER|index.docker.io/astrobagel/azure-aisearch-functionapp-dotnet:latest",
+                    "appSettings": [
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~4"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "dotnet-isolated"
+                        },
+                        {
+                            "name": "AzureWebJobsFeatureFlags",
+                            "value": "EnableWorkerIndexing"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-09-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-09-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
+                        },
+                        {
+                            "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                            "value": "false"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsightsName')), '2020-02-02').InstrumentationKey]"
+                        },
+                        {
+                            "name": "OpenAIEndpoint",
+                            "value": "[concat('https://', variables('openaiServiceName'), '.openai.azure.com')]"
+                        },
+                        {
+                            "name": "OpenAIApiKey",
+                            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('openaiServiceName')), '2021-10-01').key1]"
+                        },
+                        {
+                            "name": "TextEmbedderFunctionApiKey",
+                            "value": "[variables('functionApiKey')]"
+                        },
+                        {
+                            "name": "SearchServiceUrl",
+                            "value": "[concat('https://', variables('searchServiceName'), '.search.windows.net')]"
+                        },
+                        {
+                            "name": "SearchServiceAdminKey",
+                            "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('searchServiceName')), '2022-09-01').primaryKey]"
+                        },
+                        {
+                            "name": "SearchIndexNameBlobChunks",
+                            "value": "[variables('searchIndexNameBlobChunks')]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Search/searchServices",
+            "apiVersion": "2021-04-01-Preview",
+            "name": "[variables('searchServiceName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "[parameters('searchServiceSku')]"
+            },
+            "properties": {
+                "replicaCount": 1,
+                "partitionCount": 1,
+                "semanticSearch": "free"
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Web/serverfarms",
+            "name": "[variables('webPlanName')]",
+            "location": "[resourceGroup().location]",
+            "kind": "linux",
+            "sku": {
+                "Name": "B1"
+            },
+            "properties": {
+                "reserved": true
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "type": "Microsoft.Web/sites",
+            "name": "[variables('webAppName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
+                "[resourceId('Microsoft.Web/sites', variables('functionAppNamePython'))]",
+                "[resourceId('Microsoft.Web/sites', variables('functionAppNameDotNet'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[resourceId('Microsoft.Insights/components', variables('applicationInsightsName'))]",
+                "[resourceId('Microsoft.Search/searchServices', variables('searchServiceName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('webPlanName'))]",
+                "clientAffinityEnabled": false,
+                "httpsOnly": true,
+                "siteConfig": {
+                    "linuxFxVersion": "DOCKER|index.docker.io/astrobagel/azure-aisearch-webapp",
+                    "alwaysOn": true,
+                    "appSettings": [
+                        {
+                            "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                            "value": "false"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('Microsoft.Insights/components', variables('applicationInsightsName')), '2020-02-02').InstrumentationKey]"
+                        },
+                        {
+                            "name": "OpenAIEndpoint",
+                            "value": "[concat('https://', variables('openaiServiceName'), '.openai.azure.com')]"
+                        },
+                        {
+                            "name": "OpenAIApiKey",
+                            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('openaiServiceName')), '2021-10-01').key1]"
+                        },
+                        {
+                            "name": "OpenAIApiVersion",
+                            "value": "[variables('openaiApiVersion')]"
+                        },
+                        {
+                            "name": "OpenAIEmbeddingDeployment",
+                            "value": "[parameters('embeddingModelName')]"
+                        },
+                        {
+                            "name": "OpenAIEmbeddingVectorDimensions",
+                            "value": "[parameters('embeddingModelVectorDimensions')]"
+                        },
+                        {
+                            "name": "OpenAIGptDeployment",
+                            "value": "[parameters('gptModelName')]"
+                        },
+                        {
+                            "name": "StorageAccountConnectionString",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-09-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
+                        },
+                        {
+                            "name": "StorageContainerNameBlobDocuments",
+                            "value": "[variables('storageContainerNameBlobDocuments')]"
+                        },
+                        {
+                            "name": "StorageContainerNameBlobChunks",
+                            "value": "[variables('storageContainerNameBlobChunks')]"
+                        },
+                        {
+                            "name": "StorageContainerNameBlobInterimFiles",
+                            "value": "[variables('storageContainerNameBlobInterimFiles')]"
+                        },
+                        {
+                            "name": "TextChunkerPageLength",
+                            "value": "[variables('textChunkerPageLength')]"
+                        },
+                        {
+                            "name": "TextChunkerPageOverlap",
+                            "value": "[variables('textChunkerPageOverlap')]"
+                        },
+                        {
+                            "name": "TextEmbedderFunctionEndpointPython",
+                            "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('functionAppNamePython')), '2022-09-01').defaultHostName, '/api/chunk-embed')]"
+                        },
+                        {
+                            "name": "TextEmbedderFunctionEndpointDotNet",
+                            "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('functionAppNameDotNet')), '2022-09-01').defaultHostName, '/api/ChunkEmbedPush')]"
+                        },
+                        {
+                            "name": "TextEmbedderFunctionApiKey",
+                            "value": "[variables('functionApiKey')]"
+                        },
+                        {
+                            "name": "TextEmbedderNumTokens",
+                            "value": "[variables('textEmbedderNumTokens')]"
+                        },
+                        {
+                            "name": "TextEmbedderTokenOverlap",
+                            "value": "[variables('textEmbedderTokenOverlap')]"
+                        },
+                        {
+                            "name": "TextEmbedderMinChunkSize",
+                            "value": "[variables('textEmbedderMinChunkSize')]"
+                        },
+                        {
+                            "name": "SearchServiceUrl",
+                            "value": "[concat('https://', variables('searchServiceName'), '.search.windows.net')]"
+                        },
+                        {
+                            "name": "SearchServiceAdminKey",
+                            "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('searchServiceName')), '2022-09-01').primaryKey]"
+                        },
+                        {
+                            "name": "SearchServiceSku",
+                            "value": "[parameters('searchServiceSku')]"
+                        },
+                        {
+                            "name": "SearchIndexNameBlobDocuments",
+                            "value": "[variables('searchIndexNameBlobDocuments')]"
+                        },
+                        {
+                            "name": "SearchIndexNameBlobChunks",
+                            "value": "[variables('searchIndexNameBlobChunks')]"
+                        },
+                        {
+                            "name": "SearchIndexerSkillType",
+                            "value": "[variables('searchIndexerSkillType')]"
+                        },
+                        {
+                            "name": "SearchIndexerScheduleMinutes",
+                            "value": "[variables('searchIndexerScheduleMinutes')]"
+                        },
+                        {
+                            "name": "InitialDocumentUrls",
+                            "value": "[parameters('initialDocumentUrls')]"
+                        },
+                        {
+                            "name": "DefaultSystemRoleInformation",
+                            "value": "[variables('defaultSystemRoleInformation')]"
+                        },
+                        {
+                            "name": "DefaultCustomOrchestrationPrompt",
+                            "value": "[variables('defaultCustomOrchestrationPrompt')]"
+                        },
+                        {
+                            "name": "DisableUploadDocuments",
+                            "value": "[variables('disableUploadDocuments')]"
+                        },
+                        {
+                            "name": "DisableResetSearchConfiguration",
+                            "value": "[variables('disableResetSearchConfiguration')]"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "openAIEndpoint": {
+            "type": "string",
+            "value": "[concat('https://', variables('openaiServiceName'), '.openai.azure.com')]"
+        },
+        "openAIApiKey": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('openaiServiceName')), '2021-10-01').key1]"
+        },
+        "openAIApiVersion": {
+            "type": "string",
+            "value": "[variables('openaiApiVersion')]"
+        },
+        "openAIEmbeddingDeployment": {
+            "type": "string",
+            "value": "[parameters('embeddingModelName')]"
+        },
+        "openAIEmbeddingVectorDimensions": {
+            "type": "int",
+            "value": "[parameters('embeddingModelVectorDimensions')]"
+        },
+        "openAIGptDeployment": {
+            "type": "string",
+            "value": "[parameters('gptModelName')]"
+        },
+        "storageAccountConnectionString": {
+            "type": "string",
+            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-09-01').keys[0].value,';EndpointSuffix=core.windows.net')]"
+        },
+        "storageContainerNameBlobDocuments": {
+            "type": "string",
+            "value": "[variables('storageContainerNameBlobDocuments')]"
+        },
+        "storageContainerNameBlobChunks": {
+            "type": "string",
+            "value": "[variables('storageContainerNameBlobChunks')]"
+        },
+        "storageContainerNameBlobInterimFiles": {
+            "type": "string",
+            "value": "[variables('storageContainerNameBlobInterimFiles')]"
+        },
+        "textEmbedderFunctionEndpointPython": {
+            "type": "string",
+            "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('functionAppNamePython')), '2022-09-01').defaultHostName, '/api/chunk-embed')]"
+        },
+        "textEmbedderFunctionEndpointDotNet": {
+            "type": "string",
+            "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('functionAppNameDotNet')), '2022-09-01').defaultHostName, '/api/ChunkEmbedPush')]"
+        },
+        "textEmbedderFunctionApiKey": {
+            "type": "string",
+            "value": "[variables('functionApiKey')]"
+        },
+        "textChunkerPageLength": {
+            "type": "int",
+            "value": "[variables('textChunkerPageLength')]"
+        },
+        "textChunkerPageOverlap": {
+            "type": "int",
+            "value": "[variables('textChunkerPageOverlap')]"
+        },
+        "textEmbedderNumTokens": {
+            "type": "int",
+            "value": "[variables('textEmbedderNumTokens')]"
+        },
+        "textEmbedderTokenOverlap": {
+            "type": "int",
+            "value": "[variables('textEmbedderTokenOverlap')]"
+        },
+        "textEmbedderMinChunkSize": {
+            "type": "int",
+            "value": "[variables('textEmbedderMinChunkSize')]"
+        },
+        "searchServiceUrl": {
+            "type": "string",
+            "value": "[concat('https://', variables('searchServiceName'), '.search.windows.net')]"
+        },
+        "searchServiceAdminKey": {
+            "type": "string",
+            "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('searchServiceName')), '2022-09-01').primaryKey]"
+        },
+        "searchServiceSku":
+        {
+            "type": "string",
+            "value": "[parameters('searchServiceSku')]"
+        },
+        "searchIndexNameBlobDocuments": {
+            "type": "string",
+            "value": "[variables('searchIndexNameBlobDocuments')]"
+        },
+        "searchIndexNameBlobChunks": {
+            "type": "string",
+            "value": "[variables('searchIndexNameBlobChunks')]"
+        },
+        "searchIndexerSkillType": {
+            "type": "string",
+            "value": "[variables('searchIndexerSkillType')]"
+        },
+        "searchIndexerScheduleMinutes": {
+            "type": "int",
+            "value": "[variables('searchIndexerScheduleMinutes')]"
+        },
+        "initialDocumentUrls": {
+            "type": "string",
+            "value": "[parameters('initialDocumentUrls')]"
+        },
+        "defaultSystemRoleInformation": {
+            "type": "string",
+            "value": "[variables('defaultSystemRoleInformation')]"
+        },
+        "defaultCustomOrchestrationPrompt": {
+            "type": "string",
+            "value": "[variables('defaultCustomOrchestrationPrompt')]"
+        },
+        "disableUploadDocuments": {
+            "type": "bool",
+            "value": "[variables('disableUploadDocuments')]"
+        },
+        "disableResetSearchConfiguration": {
+            "type": "bool",
+            "value": "[variables('disableResetSearchConfiguration')]"
+        },
+        "webAppUrl": {
+            "type": "string",
+            "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('webAppName')), '2022-09-01').defaultHostName)]"
+        }
+    }
+}
