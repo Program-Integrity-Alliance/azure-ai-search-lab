@@ -2,10 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "resourcePrefix": {
-            "type": "String",
-            "minLength": 0
-        },
         "embeddingModelName": {
             "type": "String",
             "minLength": 1,
@@ -50,7 +46,7 @@
         "logAnalyticsWorkspaceName": "loga-aisearch-prod-eus-02",
         "applicationInsightsName": "appins-aisearch-prod-eus-02",
         "storageAccountName": "staisearchprodeus02",
-        "openaiServiceName": "openai-aisearch-prod-eus-02')]",
+        "openaiServiceName": "openai-aisearch-prod-eus-02",
         "functionPlanName": "funcplan-aisearch-prod-eus-02",
         "functionAppNamePython": "func-python-aisearch-prod-eus-02",
         "functionAppNameDotNet": "func-dotnet-aisearch-prod-eus-02",
@@ -171,6 +167,7 @@
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2024-06-01-preview",
             "name": "[variables('docIntelServiceName')]",
+            "location": "[resourceGroup().location]",
             "sku": {
                 "name": "S0"
             },
