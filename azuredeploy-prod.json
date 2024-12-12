@@ -4,7 +4,7 @@
     "parameters": {
         "resourcePrefix": {
             "type": "String",
-            "minLength": 1
+            "minLength": 0
         },
         "embeddingModelName": {
             "type": "String",
