@@ -179,7 +179,6 @@
                 "type": "None"
             },
             "properties": {
-                "customSubDomainName": "[variables('openaiServiceName')]",
                 "networkAcls": {
                     "defaultAction": "Allow",
                     "virtualNetworkRules": [],

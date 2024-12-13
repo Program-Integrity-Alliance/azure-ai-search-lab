@@ -43,18 +43,18 @@
         }
     },
     "variables": {
-        "logAnalyticsWorkspaceName": "loga-aisearch-prod-eus-02",
-        "applicationInsightsName": "appins-aisearch-prod-eus-02",
-        "storageAccountName": "staisearchprodeus02",
-        "openaiServiceName": "openai-aisearch-prod-eus-02",
-        "functionPlanName": "funcplan-aisearch-prod-eus-02",
-        "functionAppNamePython": "func-python-aisearch-prod-eus-02",
-        "functionAppNameDotNet": "func-dotnet-aisearch-prod-eus-02",
+        "logAnalyticsWorkspaceName": "loga-aisearch-prod-eus2",
+        "applicationInsightsName": "appins-aisearch-prod-eus2",
+        "storageAccountName": "staisearchprodeus2",
+        "openaiServiceName": "openai-aisearch-prod-eus2",
+        "functionPlanName": "funcplan-aisearch-prod-eus2",
+        "functionAppNamePython": "func-python-aisearch-prod-eus2",
+        "functionAppNameDotNet": "func-dotnet-aisearch-prod-eus2",
         "functionApiKey": "[concat(uniquestring(resourceGroup().id), '-', uniqueString(deployment().name))]",
-        "webPlanName": "webplan-aisearch-prod-eus-02",
-        "webAppName": "webapp-aisearch-prod-eus-02",
-        "searchServiceName": "srch-aisearch-prod-eus-02",
-        "docIntelServiceName": "docintel-aisearch-prod-eus-02",
+        "webPlanName": "webplan-aisearch-prod-eus2",
+        "webAppName": "webapp-aisearch-prod-eus2",
+        "searchServiceName": "srch-aisearch-prod-eus2",
+        "docIntelServiceName": "docintel-aisearch-prod-eus2",
         "openaiApiVersion": "2023-12-01-preview",
         "storageContainerNameBlobDocuments": "blob-documents",
         "storageContainerNameBlobChunks": "blob-chunks",
@@ -176,7 +176,6 @@
                 "type": "None"
             },
             "properties": {
-                "customSubDomainName": "[variables('openaiServiceName')]",
                 "networkAcls": {
                     "defaultAction": "Allow",
                     "virtualNetworkRules": [],
