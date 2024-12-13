@@ -166,11 +166,11 @@ public class AzureCognitiveSearchService : ISearchService
             searchResult.Captions.Add(result.Document.GetString(nameof(DocumentChunk.Content)));
         }
         // mjh
-        searchResult.DataSource = result.Document.GetString(nameof(DocumentChunk.SourceDocumentDataSource));
-        searchResult.SourceUrl = result.Document.GetString(nameof(DocumentChunk.SourceDocumentSourceUrl));
-        searchResult.Author = result.Document.GetString(nameof(DocumentChunk.SourceDocumentAuthor));
-        searchResult.Type = result.Document.GetString(nameof(DocumentChunk.SourceDocumentType));
-        searchResult.PublishDate = result.Document.GetDateTimeOffset(nameof(DocumentChunk.SourceDocumentPublishDate));
+        //searchResult.DataSource = result.Document.GetString(nameof(DocumentChunk.SourceDocumentDataSource));
+        //searchResult.SourceUrl = result.Document.GetString(nameof(DocumentChunk.SourceDocumentSourceUrl));
+        //searchResult.Author = result.Document.GetString(nameof(DocumentChunk.SourceDocumentAuthor));
+        //searchResult.Type = result.Document.GetString(nameof(DocumentChunk.SourceDocumentType));
+        //searchResult.PublishDate = result.Document.GetDateTimeOffset(nameof(DocumentChunk.SourceDocumentPublishDate));
         
         return searchResult;
     }
