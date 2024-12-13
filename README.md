@@ -19,8 +19,9 @@ can be found by going into 'Actions' in GitHub and manually triggering the build
 If you install Azure CLI, these templates can be deoplyed with ...
 
 ```
-az login
-az deployment group create --resource-group <RESOURCE GROUP PREVIOUSLY CREATED> --template-file <CHOOSE TEST/PROD ACCORDINGLY>>
+1. az login
+2. If you made changes to the webapp or function app, go to the repo's actions, click on left, and run appropriate build action
+3. az deployment group create --resource-group <RESOURCE GROUP PREVIOUSLY CREATED> --template-file <CHOOSE TEST/PROD ACCORDINGLY>>
 ```
 
 If you get an alert about OpenAI quotas, go to 'Azure AI Services' in the Azure portal, click on Azure Open AI, then 'Manage deleted resources' and purge any pending items to clear up quota.
@@ -29,6 +30,7 @@ If you get an alert about OpenAI quotas, go to 'Azure AI Services' in the Azure 
 
 - At time of writing automatic activation of authentication of the web app wasn't complete. You should navigate to the component in the Azure portal and set Authentication to the Microsoft identity provider so only people with access to the subscription can log in.
 - At time of writing the search component will prompt to upgrade vector model. Go ahead. Needs to be added to the template
+- At time of writing the creation of 'blob-interim-files' container in the storage account wasn't workin, created manually
 
 # ORIGINAL README ...
 
