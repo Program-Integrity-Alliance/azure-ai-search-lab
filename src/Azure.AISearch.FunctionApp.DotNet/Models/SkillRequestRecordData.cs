@@ -16,6 +16,19 @@ public class SkillRequestRecordData
     // mjh
     [JsonPropertyName("data_source")]
     public string? DataSource { get; set; }
+
+    [JsonPropertyName("source_url")]
+    public string? SourceUrl { get; set; }
+
+    [JsonPropertyName("author")]
+    public string? Author { get; set; }
+
+    [JsonPropertyName("type")]
+    public string? Type { get; set; }
+
+    [JsonPropertyName("publish_date")]
+    public string? PublishDate { get; set; }
+    // mjh
     
     [JsonPropertyName("title")]
     public string? Title { get; set; }
