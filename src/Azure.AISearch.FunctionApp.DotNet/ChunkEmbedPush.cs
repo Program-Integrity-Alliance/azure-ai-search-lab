@@ -98,6 +98,7 @@ public class ChunkEmbedPush
                                 SourceDocumentFilePath = record.Data.FilePath,
                                 // mjh
                                 SourceDocumentDataSource = record.Data.DataSource,
+                                SourceDocumentDataSet = record.Data.DataSet,
                                 SourceDocumentSourceUrl = record.Data.SourceUrl,
                                 SourceDocumentAuthor = record.Data.Author,
                                 SourceDocumentType = record.Data.Type,
