@@ -434,10 +434,10 @@ public class AzureCognitiveSearchConfigurationService
                 new SearchField(nameof(DocumentChunk.SourceDocumentFilePath), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = false, AnalyzerName = LexicalAnalyzerName.StandardLucene },
                 // mjh
                 new SearchField(nameof(DocumentChunk.SourceDocumentDataSource), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
-                new SearchField(nameof(DocumentChunk.SourceDocumentSourceUrl), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = false, AnalyzerName = LexicalAnalyzerName.StandardLucene }
+                new SearchField(nameof(DocumentChunk.SourceDocumentSourceUrl), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = false, AnalyzerName = LexicalAnalyzerName.StandardLucene },
                 new SearchField(nameof(DocumentChunk.SourceDocumentAuthor), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
                 new SearchField(nameof(DocumentChunk.SourceDocumentType), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
-                new SearchField(nameof(DocumentChunk.SourceDocumentPublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = false },
+                new SearchField(nameof(DocumentChunk.SourceDocumentPublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = false }
             },
             SemanticSettings = new SemanticSettings
             {
