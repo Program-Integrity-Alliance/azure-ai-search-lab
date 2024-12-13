@@ -31,6 +31,7 @@ If you get an alert about OpenAI quotas, go to 'Azure AI Services' in the Azure 
 - At time of writing automatic activation of authentication of the web app wasn't complete. You should navigate to the component in the Azure portal and set Authentication to the Microsoft identity provider so only people with access to the subscription can log in.
 - At time of writing the search component will prompt to upgrade vector model. Go ahead. Needs to be added to the template
 - At time of writing the creation of 'blob-interim-files' container in the storage account wasn't workin, created manually
+- At time of writing, CI/CD on the web app wasn't configured. So if you change it, it will build GitHub, but you'd then need to restart the web app
 
 # ORIGINAL README ...
 
