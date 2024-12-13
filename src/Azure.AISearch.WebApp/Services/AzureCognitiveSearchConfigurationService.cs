@@ -274,10 +274,10 @@ public class AzureCognitiveSearchConfigurationService
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentTitle)) { Source = $"/document/metadata_storage_name" },
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentFilePath)) { Source = $"/document/metadata_storage_path" },
                             // mjh
-                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentDataSource)) { Source = $"/document/data_source" }
-                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentSourceUrl)) { Source = $"/document/source_url" }
-                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentAuthor)) { Source = $"/document/author" }
-                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentType)) { Source = $"/document/doc_type" }
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentDataSource)) { Source = $"/document/data_source" },
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentSourceUrl)) { Source = $"/document/source_url" },
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentAuthor)) { Source = $"/document/author" },
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentType)) { Source = $"/document/doc_type" },
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPublishDate)) { Source = $"/document/publish_date" }
 
                         }
