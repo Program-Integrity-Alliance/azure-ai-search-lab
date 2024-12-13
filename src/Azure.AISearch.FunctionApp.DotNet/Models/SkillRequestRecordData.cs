@@ -17,6 +17,9 @@ public class SkillRequestRecordData
     [JsonPropertyName("data_source")]
     public string? DataSource { get; set; }
 
+    [JsonPropertyName("data_set")]
+    public string? DataSet { get; set; }
+
     [JsonPropertyName("source_url")]
     public string? SourceUrl { get; set; }
 

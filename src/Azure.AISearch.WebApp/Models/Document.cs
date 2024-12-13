@@ -8,6 +8,7 @@ public class Document
     public string? FilePath { get; set; }
     // mjh
     public string? DataSource { get; set; }
+    public string? DataSet { get; set; }
     public string? SourceUrl { get; set; }
     public string? Author { get; set; }
     public string? Type { get; set; }
