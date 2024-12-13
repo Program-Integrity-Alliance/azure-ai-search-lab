@@ -138,6 +138,13 @@ public class AzureCognitiveSearchService : ISearchService
             // sense and will return an error.
             searchOptions.HighlightFields.Add(nameof(DocumentChunk.Content));
         }
+        // mjh
+        searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentDataSource));   
+        searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentSourceUrl));
+        searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentAuthor));
+        searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentType));
+        searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentPublishDate));
+
     }
 
     private SearchResult GetSearchResultForChunksIndex(SearchResult<SearchDocument> result, QueryType? queryType)
@@ -154,7 +161,13 @@ public class AzureCognitiveSearchService : ISearchService
             // to at least show the context of the response.
             searchResult.Captions.Add(result.Document.GetString(nameof(DocumentChunk.Content)));
         }
-
+        // mjh
+        searchResult.DataSource = result.Document.GetString(nameof(DocumentChunk.SourceDocumentDataSource));
+        searchResult.SourceUrl = result.Document.GetString(nameof(DocumentChunk.SourceDocumentSourceUrl));
+        searchResult.Author = result.Document.GetString(nameof(DocumentChunk.SourceDocumentAuthor));
+        searchResult.Type = result.Document.GetString(nameof(DocumentChunk.SourceDocumentType));
+        searchResult.PublishDate = result.Document.GetDateTimeOffset(nameof(DocumentChunk.SourceDocumentPublishDate));
+        
         return searchResult;
     }
 

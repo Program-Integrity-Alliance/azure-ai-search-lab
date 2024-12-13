@@ -98,6 +98,11 @@ public class ChunkEmbedPush
                                 SourceDocumentFilePath = record.Data.FilePath,
                                 // mjh
                                 SourceDocumentDataSource = record.Data.DataSource
+                                SourceDocumentSourceUrl = record.Data.SourceUrl
+                                SourceDocumentAuthor = record.Data.Author
+                                SourceDocumentType = record.Data.Type
+                                SourceDocumentPublishDate = record.Data.PublishDate
+
                             };
                             documentChunks.Add(documentChunk);
                             index++;

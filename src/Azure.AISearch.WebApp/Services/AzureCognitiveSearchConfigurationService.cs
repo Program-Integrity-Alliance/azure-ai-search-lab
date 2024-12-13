@@ -270,6 +270,11 @@ public class AzureCognitiveSearchConfigurationService
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentFilePath)) { Source = $"/document/metadata_storage_path" },
                             // mjh
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentDataSource)) { Source = $"/document/data_source" }
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentSourceUrl)) { Source = $"/document/source_url" }
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentAuthor)) { Source = $"/document/author" }
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentType)) { Source = $"/document/doc_type" }
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPublishDate)) { Source = $"/document/publish_date" }
+
                         }
                     }
                 }
@@ -338,14 +343,23 @@ public class AzureCognitiveSearchConfigurationService
                                         new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentId)) { Source = $"/document/{nameof(Document.Id)}" },
                                         // Map the document file path.
                                         new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentFilePath)) { Source = $"/document/{nameof(Document.FilePath)}" },
-                                        // mjh Map the data source
-                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentDataSource)) { Source = $"/document/{nameof(Document.DataSource)}" },
                                         // Map the document title.
                                         new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentTitle)) { Source = $"/document/{nameof(Document.Title)}" },
                                         // Map the chunked content.
                                         new InputFieldMappingEntry(nameof(DocumentChunk.Content)) { Source = $"/document/{nameof(Document.Content)}/chunks/*/content" },
                                         // Map the embedding vector.
                                         new InputFieldMappingEntry(nameof(DocumentChunk.ContentVector)) { Source = $"/document/{nameof(Document.Content)}/chunks/*/embedding_metadata/embedding" },
+                                        // mjh Map the data source
+                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentDataSource)) { Source = $"/document/{nameof(Document.DataSource)}" },
+                                        // mjh Map the source url
+                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentSourceUrl)) { Source = $"/document/{nameof(Document.SourceUrl)}" },
+                                        // mjh Map the author
+                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentAuthor)) { Source = $"/document/{nameof(Document.Author)}" },
+                                        // mjh Map the type
+                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentType)) { Source = $"/document/{nameof(Document.Type)}" },
+                                        // mjh Map the publish date
+                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPublishDate)) { Source = $"/document/{nameof(Document.PublishDate)}" }
+                                
                                     }
                                 }
                             }
@@ -417,9 +431,13 @@ public class AzureCognitiveSearchConfigurationService
                 new SearchField(nameof(DocumentChunk.ContentVector), SearchFieldDataType.Collection(SearchFieldDataType.Single)) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = true, VectorSearchDimensions = this.settings.OpenAIEmbeddingVectorDimensions, VectorSearchProfile = Constants.ConfigurationNames.VectorSearchProfileNameDefault },
                 new SearchField(nameof(DocumentChunk.SourceDocumentId), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = false },
                 new SearchField(nameof(DocumentChunk.SourceDocumentTitle), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
-                new SearchField(nameof(DocumentChunk.SourceDocumentFilePath), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
+                new SearchField(nameof(DocumentChunk.SourceDocumentFilePath), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = false, AnalyzerName = LexicalAnalyzerName.StandardLucene },
                 // mjh
-                new SearchField(nameof(DocumentChunk.SourceDocumentDataSource), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene }
+                new SearchField(nameof(DocumentChunk.SourceDocumentDataSource), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
+                new SearchField(nameof(DocumentChunk.SourceDocumentSourceUrl), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = false, AnalyzerName = LexicalAnalyzerName.StandardLucene }
+                new SearchField(nameof(DocumentChunk.SourceDocumentAuthor), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
+                new SearchField(nameof(DocumentChunk.SourceDocumentType), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
+                new SearchField(nameof(DocumentChunk.SourceDocumentPublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = false },
             },
             SemanticSettings = new SemanticSettings
             {

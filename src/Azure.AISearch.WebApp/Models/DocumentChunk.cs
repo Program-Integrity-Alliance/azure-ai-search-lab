@@ -11,4 +11,9 @@ public class DocumentChunk
     public string? SourceDocumentFilePath { get; set; }
     // mjh
     public string? SourceDocumentDataSource { get; set; }
+    public string? SourceDocumentSourceUrl { get; set; }
+    public string? SourceDocumentAuthor { get; set; }
+    public string? SourceDocumentType { get; set; }
+    public DateTimeOffset? SourceDocumentPublishDate { get; set; }
+
 }
