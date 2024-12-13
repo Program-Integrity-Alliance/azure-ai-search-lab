@@ -450,7 +450,7 @@ public class AzureCognitiveSearchConfigurationService
                 new SearchField(nameof(DocumentChunk.SourceDocumentSourceUrl), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
                 new SearchField(nameof(DocumentChunk.SourceDocumentAuthor), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
                 new SearchField(nameof(DocumentChunk.SourceDocumentType), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
-                new SearchField(nameof(DocumentChunk.SourceDocumentPublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true }
+                new SearchField(nameof(DocumentChunk.SourceDocumentPublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = false }
             },
             SemanticSettings = new SemanticSettings
             {
