@@ -177,7 +177,12 @@ public class AzureCognitiveSearchConfigurationService
                 new SearchField(nameof(Document.Content), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
                 new SearchField(nameof(Document.FilePath), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
                 // mjh
-                new SearchField(nameof(Document.DataSource), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene }
+                new SearchField(nameof(Document.DataSource), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
+                new SearchField(nameof(Document.SourceUrl), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
+                new SearchField(nameof(Document.Author), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
+                new SearchField(nameof(Document.Type), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
+                new SearchField(nameof(Document.PublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = false }
+
             },
             SemanticSettings = new SemanticSettings
             {
