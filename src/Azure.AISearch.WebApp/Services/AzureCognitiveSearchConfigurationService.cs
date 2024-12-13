@@ -159,6 +159,14 @@ public class AzureCognitiveSearchConfigurationService
                 new FieldMapping("metadata_storage_path") { TargetFieldName = nameof(Document.FilePath) },
                 // mjh Map the data source custom metadata field on the blob
                 new FieldMapping("data_source") { TargetFieldName = nameof(Document.DataSource) }
+                // mjh Map the source url custom metadata field on the blob
+                new FieldMapping("source_url") { TargetFieldName = nameof(Document.SourceUrl) }
+                // mjh Map the author custom metadata field on the blob
+                new FieldMapping("author") { TargetFieldName = nameof(Document.Author) }
+                // mjh Map the type custom metadata field on the blob
+                new FieldMapping("doc_type") { TargetFieldName = nameof(Document.Type) }
+                // mjh Map the publish date custom metadata field on the blob
+                new FieldMapping("publish_date") { TargetFieldName = nameof(Document.PublishDate) }
             },
             // Use the skillset for chunking and embedding.
             SkillsetName = skillset.Name

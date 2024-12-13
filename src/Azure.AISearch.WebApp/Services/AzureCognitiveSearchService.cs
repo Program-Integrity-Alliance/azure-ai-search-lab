@@ -110,9 +110,13 @@ public class AzureCognitiveSearchService : ISearchService
         searchOptions.Select.Add(nameof(Document.Id));
         searchOptions.Select.Add(nameof(Document.Title));
         searchOptions.Select.Add(nameof(Document.FilePath));
+        searchOptions.HighlightFields.Add(nameof(Document.Content));
         // mjh
         searchOptions.Select.Add(nameof(Document.DataSource));
-        searchOptions.HighlightFields.Add(nameof(Document.Content));
+        searchOptions.Select.Add(nameof(Document.SourceUrl));
+        searchOptions.Select.Add(nameof(Document.Author));
+        searchOptions.Select.Add(nameof(Document.Type));
+        searchOptions.Select.Add(nameof(Document.PublishDate));
     }
 
     private SearchResult GetSearchResultForDocumentsIndex(SearchResult<SearchDocument> result)
