@@ -176,6 +176,7 @@
                 "type": "None"
             },
             "properties": {
+                "customSubDomainName": "[variables('docIntelServiceName')]",
                 "networkAcls": {
                     "defaultAction": "Allow",
                     "virtualNetworkRules": [],
