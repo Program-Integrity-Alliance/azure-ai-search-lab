@@ -17,5 +17,4 @@ public class DocumentChunk
     public string? SourceDocumentType { get; set; }
     public DateTimeOffset? SourceDocumentPublishDate { get; set; }
     public string? SourceDocumentPage { get; set; }
-
 }

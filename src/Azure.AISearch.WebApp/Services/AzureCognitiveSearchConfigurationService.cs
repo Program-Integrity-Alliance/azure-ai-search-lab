@@ -167,6 +167,8 @@ public class AzureCognitiveSearchConfigurationService
                 new FieldMapping("doc_type") { TargetFieldName = nameof(Document.Type) },
                 // mjh Map the publish date custom metadata field on the blob
                 new FieldMapping("publish_date") { TargetFieldName = nameof(Document.PublishDate) }
+                // mjh Map the page custom metadata field on the blob
+                new FieldMapping("page") { TargetFieldName = nameof(Document.Page) }
             },
             // Use the skillset for chunking and embedding.
             SkillsetName = skillset.Name
@@ -190,6 +192,7 @@ public class AzureCognitiveSearchConfigurationService
                 new SearchField(nameof(Document.Author), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
                 new SearchField(nameof(Document.Type), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
                 new SearchField(nameof(Document.PublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = false }
+                new SearchField(nameof(Document.Page), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
 
             },
             SemanticSettings = new SemanticSettings

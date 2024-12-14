@@ -117,6 +117,7 @@ public class AzureCognitiveSearchService : ISearchService
         searchOptions.Select.Add(nameof(Document.Author));
         searchOptions.Select.Add(nameof(Document.Type));
         searchOptions.Select.Add(nameof(Document.PublishDate));
+        searchOptions.Select.Add(nameof(Document.Page));
     }
 
     private SearchResult GetSearchResultForDocumentsIndex(SearchResult<SearchDocument> result)
