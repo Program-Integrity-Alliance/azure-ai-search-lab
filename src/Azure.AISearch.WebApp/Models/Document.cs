@@ -13,4 +13,5 @@ public class Document
     public string? Author { get; set; }
     public string? Type { get; set; }
     public DateTimeOffset? PublishDate { get; set; }
+    public string? Page { get; set; }
 }

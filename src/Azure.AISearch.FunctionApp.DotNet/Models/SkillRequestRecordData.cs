@@ -31,6 +31,9 @@ public class SkillRequestRecordData
 
     [JsonPropertyName("publish_date")]
     public string? PublishDate { get; set; }
+
+    [JsonPropertyName("page")]
+    public string? Page { get; set; }
     // mjh
     
     [JsonPropertyName("title")]
