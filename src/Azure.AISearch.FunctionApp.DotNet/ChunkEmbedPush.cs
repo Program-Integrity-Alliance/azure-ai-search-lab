@@ -102,7 +102,8 @@ public class ChunkEmbedPush
                                 SourceDocumentSourceUrl = record.Data.SourceUrl,
                                 SourceDocumentAuthor = record.Data.Author,
                                 SourceDocumentType = record.Data.Type,
-                                SourceDocumentPublishDate = record.Data.PublishDate
+                                SourceDocumentPublishDate = record.Data.PublishDate,
+                                SourceDocumentPage = record.Data.Page
 
                             };
                             documentChunks.Add(documentChunk);

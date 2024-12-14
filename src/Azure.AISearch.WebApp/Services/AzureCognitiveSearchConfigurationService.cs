@@ -287,7 +287,8 @@ public class AzureCognitiveSearchConfigurationService
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentSourceUrl)) { Source = $"/document/source_url" },
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentAuthor)) { Source = $"/document/author" },
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentType)) { Source = $"/document/doc_type" },
-                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPublishDate)) { Source = $"/document/publish_date" }
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPublishDate)) { Source = $"/document/publish_date" },
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPage)) { Source = $"/document/page" }  
 
                         }
                     }
@@ -374,8 +375,10 @@ public class AzureCognitiveSearchConfigurationService
                                         // mjh Map the type
                                         new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentType)) { Source = $"/document/{nameof(Document.Type)}" },
                                         // mjh Map the publish date
-                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPublishDate)) { Source = $"/document/{nameof(Document.PublishDate)}" }
-                                
+                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPublishDate)) { Source = $"/document/{nameof(Document.PublishDate)}" },
+                                        // mjh Map the page
+                                        new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPage)) { Source = $"/document/{nameof(Document.Page)}" }
+
                                     }
                                 }
                             }
@@ -454,7 +457,8 @@ public class AzureCognitiveSearchConfigurationService
                 new SearchField(nameof(DocumentChunk.SourceDocumentSourceUrl), SearchFieldDataType.String) { IsFilterable = false, IsSortable = false, IsFacetable = false, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.StandardLucene },
                 new SearchField(nameof(DocumentChunk.SourceDocumentAuthor), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
                 new SearchField(nameof(DocumentChunk.SourceDocumentType), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft },
-                new SearchField(nameof(DocumentChunk.SourceDocumentPublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = false }
+                new SearchField(nameof(DocumentChunk.SourceDocumentPublishDate), SearchFieldDataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = false },
+                new SearchField(nameof(DocumentChunk.SourceDocumentPage), SearchFieldDataType.String) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsSearchable = true, AnalyzerName = LexicalAnalyzerName.EnMicrosoft }
             },
             SemanticSettings = new SemanticSettings
             {

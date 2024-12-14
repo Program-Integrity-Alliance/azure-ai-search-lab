@@ -149,6 +149,7 @@ public class AzureCognitiveSearchService : ISearchService
         searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentAuthor));
         searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentType));
         searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentPublishDate));
+        searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentPage));
 
     }
 
@@ -173,6 +174,7 @@ public class AzureCognitiveSearchService : ISearchService
         //searchResult.Author = result.Document.GetString(nameof(DocumentChunk.SourceDocumentAuthor));
         //searchResult.Type = result.Document.GetString(nameof(DocumentChunk.SourceDocumentType));
         //searchResult.PublishDate = result.Document.GetDateTimeOffset(nameof(DocumentChunk.SourceDocumentPublishDate));
+        //searchResult.Page = result.Document.GetString(nameof(DocumentChunk.SourceDocumentPage));
         
         return searchResult;
     }
