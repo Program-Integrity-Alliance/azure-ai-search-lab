@@ -166,7 +166,7 @@ public class AzureCognitiveSearchConfigurationService
                 // mjh Map the type custom metadata field on the blob
                 new FieldMapping("doc_type") { TargetFieldName = nameof(Document.Type) },
                 // mjh Map the publish date custom metadata field on the blob
-                new FieldMapping("publish_date") { TargetFieldName = nameof(Document.PublishDate) }
+                new FieldMapping("publish_date") { TargetFieldName = nameof(Document.PublishDate) },
                 // mjh Map the page custom metadata field on the blob
                 new FieldMapping("page") { TargetFieldName = nameof(Document.Page) }
             },
