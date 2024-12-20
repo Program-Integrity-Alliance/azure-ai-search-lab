@@ -16,7 +16,7 @@
                 // mjh Set default
                 const selectedScenario = ref(scenarios.value.length >= 6 ? scenarios.value[5] : null);
                 const searchRequest = ref(@Html.Raw(JsonSerializer.Serialize(Model.SearchRequest, JsonConfiguration.DefaultJsonOptions)));
-                var settingsValue = { showExplanation: false };
+                var settingsValue = { showExplanation: false, showOptions: true };
                 var settingsValueStorage = localStorage.getItem('settings');
                 if (settingsValueStorage) {
                     settingsValue = JSON.parse(settingsValueStorage);
@@ -208,8 +208,13 @@
 
 <form method="post" class="mb-3">
 
-    <div class="card mb-3">
-        <div class="card-header">Options</div>
+    <div class="card mb-3" v-show="settings.showOptions">
+        <div class="card-header">
+            <div class="form-check form-check-inline form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" v-model="settings.showOptions">
+                <label class="form-check-label">Show Options</label>
+            </div>
+        </div>
         <div class="card-body">
             <div class="mb-2">
                 <label class="form-label">Predefined scenario</label>
