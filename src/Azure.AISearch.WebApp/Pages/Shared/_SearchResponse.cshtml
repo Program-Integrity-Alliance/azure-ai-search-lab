@@ -54,8 +54,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto mb-2">
                             <div>
-                                <code>@searchResult.DocumentTitle</code>
-                                <code>@searchResult.DocumentPage</code>
+                                <a href="@searchResult.DocumentSourceUrl">@searchResult.DocumentTitle</a>
                                 <code>@searchResult.DocumentSourceUrl</code>
                             </div>
                             @if (searchResult.Captions.Any())
