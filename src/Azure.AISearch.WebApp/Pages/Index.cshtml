@@ -509,7 +509,7 @@
             :disabled="isLoading" />
         <button class="btn btn-outline-primary" 
                 type="button" 
-                @click="submitSearch" 
+                @(@click)="submitSearch" 
                 :disabled="isLoading">
             <!-- Button content changes based on `isLoading` -->
             <span v-if="!isLoading"><i class="bi bi-send"></i> Send</span>
