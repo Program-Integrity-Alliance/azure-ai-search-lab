@@ -101,6 +101,7 @@ public class AzureCognitiveSearchService : ISearchService
                 answerForDocumentKey.DocumentId = searchResult.DocumentId;
                 answerForDocumentKey.DocumentTitle = searchResult.DocumentTitle;
                 answerForDocumentKey.DocumentPage = searchResult.DocumentPage;
+                answerForDocumentKey.DocumentUrl = searchResult.DocumentUrl;
             }
         }
         return response;
@@ -129,6 +130,7 @@ public class AzureCognitiveSearchService : ISearchService
         searchResult.DocumentId = result.Document.GetString(nameof(Document.Id));
         searchResult.DocumentTitle = result.Document.GetString(nameof(Document.Title));
         searchResult.DocumentPage = result.Document.GetString(nameof(Document.Page));
+        searchResult.DocumentSourceUrl = result.Document.GetString(nameof(Document.SourceUrl));
 
         return searchResult;
     }
@@ -174,7 +176,7 @@ public class AzureCognitiveSearchService : ISearchService
         // mjh
         //searchResult.DataSource = result.Document.GetString(nameof(DocumentChunk.SourceDocumentDataSource));
         //searchResult.DataSet = result.Document.GetString(nameof(DocumentChunk.SourceDocumentDataSet));
-        //searchResult.SourceUrl = result.Document.GetString(nameof(DocumentChunk.SourceDocumentSourceUrl));
+        searchResult.SourceUrl = result.Document.GetString(nameof(DocumentChunk.SourceDocumentSourceUrl));
         //searchResult.Author = result.Document.GetString(nameof(DocumentChunk.SourceDocumentAuthor));
         //searchResult.Type = result.Document.GetString(nameof(DocumentChunk.SourceDocumentType));
         //searchResult.PublishDate = result.Document.GetDateTimeOffset(nameof(DocumentChunk.SourceDocumentPublishDate));

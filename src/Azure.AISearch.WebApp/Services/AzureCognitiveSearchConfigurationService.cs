@@ -291,7 +291,7 @@ public class AzureCognitiveSearchConfigurationService
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentAuthor)) { Source = $"/document/author" },
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentType)) { Source = $"/document/doc_type" },
                             new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPublishDate)) { Source = $"/document/publish_date" },
-                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPage)) { Source = $"/document/page" }  
+                            new InputFieldMappingEntry(nameof(DocumentChunk.SourceDocumentPage)) { Source = $"/document/page" } 
 
                         }
                     }
