@@ -17,7 +17,7 @@ public class SearchScenarioProvider
         ArgumentNullException.ThrowIfNull(this.settings.SearchIndexNameBlobChunks);
         return new List<SearchScenario>
         {
-            new SearchScenario
+            //new SearchScenario
             //{
             //    Id = "az-cognitivesearch-documents-keyword-standard",
             //    DisplayName = "Azure AI Search - Documents - Keyword - Standard",
