@@ -12,9 +12,11 @@
         createApp({
             setup() {
                 const scenarios = ref(@Html.Raw(JsonSerializer.Serialize(Model.Scenarios, JsonConfiguration.DefaultJsonOptions)));
-                const selectedScenario = ref(null);
+                //const selectedScenario = ref(null);
+                // mjh Set default
+                const selectedScenario = ref(scenarios.value.length >= 6 ? scenarios.value[5] : null);
                 const searchRequest = ref(@Html.Raw(JsonSerializer.Serialize(Model.SearchRequest, JsonConfiguration.DefaultJsonOptions)));
-                var settingsValue = { showExplanation: true };
+                var settingsValue = { showExplanation: false };
                 var settingsValueStorage = localStorage.getItem('settings');
                 if (settingsValueStorage) {
                     settingsValue = JSON.parse(settingsValueStorage);
