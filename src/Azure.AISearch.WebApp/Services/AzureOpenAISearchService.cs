@@ -89,11 +89,12 @@ public class AzureOpenAISearchService : ISearchService
             var citationIndex = 0;
             foreach (var citation in answerMessage.AzureExtensionsContext.Citations)
             {
-                answerText = answerText.Replace($"[doc{++citationIndex}]", $"<cite>{citation.Title}{citation.DocumentSourceUrl}</cite>", StringComparison.OrdinalIgnoreCase);
+                answerText = answerText.Replace($"[doc{++citationIndex}]", $"<cite>{citation.Title}{citation.Url}</cite>", StringComparison.OrdinalIgnoreCase);
                 searchResponse.SearchResults.Add(new SearchResult
                 {
                     DocumentId = citation.Filepath,
                     DocumentTitle = citation.Title,
+                    SocumentSourceUrl = citation.Url,
                     Captions = string.IsNullOrWhiteSpace(citation.Content) ? Array.Empty<string>() : new[] { citation.Content }
                 });
             }
@@ -120,7 +121,7 @@ public class AzureOpenAISearchService : ISearchService
             {
                 ContentFieldNames = { useDocumentsIndex ? nameof(Document.Content) : nameof(DocumentChunk.Content) },
                 TitleFieldName = useDocumentsIndex ? nameof(Document.Title) : nameof(DocumentChunk.SourceDocumentTitle),
-                UrlFieldName = useDocumentsIndex ? nameof(Document.FilePath) : nameof(DocumentChunk.SourceDocumentFilePath),
+                UrlFieldName = useDocumentsIndex ? nameof(Document.SourceUrl) : nameof(DocumentChunk.SourceDocumentSourceUrl),
                 FilepathFieldName = useDocumentsIndex ? nameof(Document.FilePath) : nameof(DocumentChunk.SourceDocumentFilePath),
                 VectorFieldNames = { useDocumentsIndex ? null : nameof(DocumentChunk.ContentVector) }
             },
