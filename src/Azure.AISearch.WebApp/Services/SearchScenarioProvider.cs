@@ -18,29 +18,29 @@ public class SearchScenarioProvider
         return new List<SearchScenario>
         {
             new SearchScenario
-            {
-                Id = "az-cognitivesearch-documents-keyword-standard",
-                DisplayName = "Azure AI Search - Documents - Keyword - Standard",
-                Description = "This scenario uses Azure AI Search to perform keyword search across the original documents. It uses the standard ('simple') search mode.",
-                SearchRequest = new SearchRequest
-                {
-                    Engine = EngineType.AzureCognitiveSearch,
-                    SearchIndex = SearchIndexType.Documents,
-                    QueryType = QueryType.TextStandard
-                }
-            },
-            new SearchScenario
-            {
-                Id = "az-cognitivesearch-documents-keyword-semantic",
-                DisplayName = "Azure AI Search - Documents - Keyword - Semantic",
-                Description = "This scenario uses Azure AI Search to perform keyword search across the original documents. It uses semantic ranking which returns more relevant results by applying language understanding to an initial search result.",
-                SearchRequest = new SearchRequest
-                {
-                    Engine = EngineType.AzureCognitiveSearch,
-                    SearchIndex = SearchIndexType.Documents,
-                    QueryType = QueryType.TextSemantic
-                }
-            },
+            //{
+            //    Id = "az-cognitivesearch-documents-keyword-standard",
+            //    DisplayName = "Azure AI Search - Documents - Keyword - Standard",
+            //    Description = "This scenario uses Azure AI Search to perform keyword search across the original documents. It uses the standard ('simple') search mode.",
+            //    SearchRequest = new SearchRequest
+            //    {
+            //        Engine = EngineType.AzureCognitiveSearch,
+            //        SearchIndex = SearchIndexType.Documents,
+            //        QueryType = QueryType.TextStandard
+            //    }
+            //},
+            //new SearchScenario
+            //{
+            //    Id = "az-cognitivesearch-documents-keyword-semantic",
+            //    DisplayName = "Azure AI Search - Documents - Keyword - Semantic",
+            //    Description = "This scenario uses Azure AI Search to perform keyword search across the original documents. It uses semantic ranking which returns more relevant results by applying language understanding to an initial search result.",
+            //    SearchRequest = new SearchRequest
+            //    {
+            //        Engine = EngineType.AzureCognitiveSearch,
+            //        SearchIndex = SearchIndexType.Documents,
+            //        QueryType = QueryType.TextSemantic
+            //    }
+            //},
             new SearchScenario
             {
                 Id = "az-cognitivesearch-chunks-text-standard",
