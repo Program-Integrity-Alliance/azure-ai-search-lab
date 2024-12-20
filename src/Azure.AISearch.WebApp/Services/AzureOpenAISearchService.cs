@@ -94,7 +94,7 @@ public class AzureOpenAISearchService : ISearchService
                 {
                     DocumentId = citation.Filepath,
                     DocumentTitle = citation.Title,
-                    SocumentSourceUrl = citation.Url,
+                    DocumentSourceUrl = citation.Url,
                     Captions = string.IsNullOrWhiteSpace(citation.Content) ? Array.Empty<string>() : new[] { citation.Content }
                 });
             }
