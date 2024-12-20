@@ -14,7 +14,7 @@
                 const scenarios = ref(@Html.Raw(JsonSerializer.Serialize(Model.Scenarios, JsonConfiguration.DefaultJsonOptions)));
                 //const selectedScenario = ref(null);
                 // mjh Set default
-                const selectedScenario = ref(scenarios.value.length >= 4 ? scenarios.value[5] : null);
+                const selectedScenario = ref(scenarios.value.length >= 4 ? scenarios.value[6] : null);
                 const searchRequest = ref(@Html.Raw(JsonSerializer.Serialize(Model.SearchRequest, JsonConfiguration.DefaultJsonOptions)));
                 var settingsValue = { showExplanation: false, showOptions: true };
                 var settingsValueStorage = localStorage.getItem('settings');
