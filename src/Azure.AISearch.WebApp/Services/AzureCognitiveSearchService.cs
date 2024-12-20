@@ -181,7 +181,22 @@ public class AzureCognitiveSearchService : ISearchService
         //searchResult.Type = result.Document.GetString(nameof(DocumentChunk.SourceDocumentType));
         //searchResult.PublishDate = result.Document.GetDateTimeOffset(nameof(DocumentChunk.SourceDocumentPublishDate));
         searchResult.DocumentPage = result.Document.GetString(nameof(DocumentChunk.SourceDocumentPage));
-        
+
+        // Extract #page=XX from DocumentPage, which points at blob storage
+        if (!string.IsNullOrWhiteSpace(searchResult.DocumentPage))
+        {
+            var match = Regex.Match(searchResult.DocumentPage, @"#page=(\d+)");
+            if (match.Success)
+            {
+                searchResult.DocumentPage = match.Groups[1].Value;
+            }
+        }
+        // Add to source URL
+        if (!string.IsNullOrWhiteSpace(searchResult.DocumentPage))
+        {
+            searchResult.DocumentSourceUrl += $"#page={searchResult.DocumentPage}";
+        }
+
         return searchResult;
     }
 
