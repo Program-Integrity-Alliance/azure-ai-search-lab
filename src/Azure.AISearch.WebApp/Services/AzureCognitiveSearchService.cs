@@ -176,7 +176,7 @@ public class AzureCognitiveSearchService : ISearchService
         // mjh
         //searchResult.DataSource = result.Document.GetString(nameof(DocumentChunk.SourceDocumentDataSource));
         //searchResult.DataSet = result.Document.GetString(nameof(DocumentChunk.SourceDocumentDataSet));
-        searchResult.SourceUrl = result.Document.GetString(nameof(DocumentChunk.SourceDocumentSourceUrl));
+        searchResult.DocumentSourceUrl = result.Document.GetString(nameof(DocumentChunk.SourceDocumentSourceUrl));
         //searchResult.Author = result.Document.GetString(nameof(DocumentChunk.SourceDocumentAuthor));
         //searchResult.Type = result.Document.GetString(nameof(DocumentChunk.SourceDocumentType));
         //searchResult.PublishDate = result.Document.GetDateTimeOffset(nameof(DocumentChunk.SourceDocumentPublishDate));
