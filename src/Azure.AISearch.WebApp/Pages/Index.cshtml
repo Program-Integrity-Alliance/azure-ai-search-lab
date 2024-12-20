@@ -505,12 +505,23 @@
             class="form-control border-primary" 
             placeholder="Search or ask anything" 
             name="@nameof(SearchRequest.Query)" 
-            v-model="query"
+            v-model="query" 
             :disabled="isLoading" />
-        <button class="btn btn-outline-primary" type="submit" @click="submitSearch" :disabled="isLoading">
+        <button class="btn btn-outline-primary" 
+                type="button" 
+                @click="submitSearch" 
+                :disabled="isLoading">
+            <!-- Button content changes based on `isLoading` -->
             <span v-if="!isLoading"><i class="bi bi-send"></i> Send</span>
-            <span v-else><i class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i> Searching...</span>
+            <span v-else>
+                <i class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i> Searching...
+            </span>
         </button>
+    </div>
+
+    <!-- Optional dynamic status message -->
+    <div v-if="isLoading" class="mt-2 text-primary">
+        <i class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i> Searching, please wait...
     </div>
 
 </form>
