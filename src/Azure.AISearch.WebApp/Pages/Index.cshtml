@@ -30,6 +30,11 @@
                     }
                 });
 
+                // Trigger logic for the default selected scenario
+                if (selectedScenario.value) {
+                    searchRequest.value = selectedScenario.value.searchRequest; // Trigger the effect of selecting the default
+                }
+
                 // Save settings when changed.
                 watch(settings, (newSettings) => {
                     localStorage.setItem('settings', JSON.stringify(newSettings));
@@ -208,14 +213,14 @@
 
 <form method="post" class="mb-3">
 
-    <div class="card mb-3" v-show="settings.showOptions">
+    <div class="card mb-3" >
         <div class="card-header">
             <div class="form-check form-check-inline form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" v-model="settings.showOptions">
                 <label class="form-check-label">Show Options</label>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" v-show="settings.showOptions">
             <div class="mb-2">
                 <label class="form-label">Predefined scenario</label>
                 <div class="form-group">
