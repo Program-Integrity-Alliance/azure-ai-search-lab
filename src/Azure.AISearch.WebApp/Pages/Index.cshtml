@@ -501,9 +501,18 @@
     }
 
     <div class="input-group">
-        <input type="text" class="form-control border-primary" placeholder="Search or ask anything" name="@nameof(SearchRequest.Query)" />
-        <button class="btn btn-outline-primary" type="submit"><i class="bi bi-send"></i> Send</button>
+        <input type="text" 
+            class="form-control border-primary" 
+            placeholder="Search or ask anything" 
+            name="@nameof(SearchRequest.Query)" 
+            v-model="query"
+            :disabled="isLoading" />
+        <button class="btn btn-outline-primary" type="submit" @click="submitSearch" :disabled="isLoading">
+            <span v-if="!isLoading"><i class="bi bi-send"></i> Send</span>
+            <span v-else><i class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></i> Searching...</span>
+        </button>
     </div>
+
 </form>
 
 <partial name="_SearchResponse" model="Model.SearchResponse" />
