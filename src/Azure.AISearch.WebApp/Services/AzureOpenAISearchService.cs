@@ -89,7 +89,7 @@ public class AzureOpenAISearchService : ISearchService
             var citationIndex = 0;
             foreach (var citation in answerMessage.AzureExtensionsContext.Citations)
             {
-                answerText = answerText.Replace($"[doc{++citationIndex}]", $"<cite>{citation.Title}{citation.Url}{citation.Filepath} XX </cite>", StringComparison.OrdinalIgnoreCase);
+                answerText = answerText.Replace($"[doc{++citationIndex}]", $"<cite>{citation.Title}{citation.Url}{citation.Filepath}</cite> XXX", StringComparison.OrdinalIgnoreCase);
                 searchResponse.SearchResults.Add(new SearchResult
                 {
                     DocumentId = citation.Filepath,
