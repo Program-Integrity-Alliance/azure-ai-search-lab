@@ -326,7 +326,9 @@ public class AzureCognitiveSearchConfigurationService
                     // Pass the document file path.
                     new InputFieldMappingEntry("filepath") { Source = $"/document/{nameof(Document.FilePath)}" },
                     // mjh Pass the data source 
-                    new InputFieldMappingEntry("data_source") { Source = $"/document/{nameof(Document.DataSource)}" },                    
+                    new InputFieldMappingEntry("data_source") { Source = $"/document/{nameof(Document.DataSource)}" },   
+                    // Pass the document page.
+                    new InputFieldMappingEntry("page") { Source = $"/document/{nameof(Document.Page)}" },                 
                     // Pass the field name as a string literal.
                     new InputFieldMappingEntry("fieldname") { Source = $"='{nameof(Document.Content)}'" },
                     // Pass the embedding deployment to use as a string literal.

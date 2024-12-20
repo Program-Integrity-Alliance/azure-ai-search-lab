@@ -100,6 +100,7 @@ public class AzureCognitiveSearchService : ISearchService
             {
                 answerForDocumentKey.DocumentId = searchResult.DocumentId;
                 answerForDocumentKey.DocumentTitle = searchResult.DocumentTitle;
+                answerForDocumentKey.DocumentPage = searchResult.DocumentPage;
             }
         }
         return response;
@@ -137,7 +138,6 @@ public class AzureCognitiveSearchService : ISearchService
         searchOptions.Select.Add(nameof(DocumentChunk.Id));
         searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentId));
         searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentTitle));
-        searchOptions.Select.Add(nameof(DocumentChunk.SourceDocumentPage));
 
         searchOptions.Select.Add(nameof(DocumentChunk.Content));
         if (queryType != QueryType.Vector)
