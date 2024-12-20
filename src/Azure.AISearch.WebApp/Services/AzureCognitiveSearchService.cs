@@ -101,7 +101,7 @@ public class AzureCognitiveSearchService : ISearchService
                 answerForDocumentKey.DocumentId = searchResult.DocumentId;
                 answerForDocumentKey.DocumentTitle = searchResult.DocumentTitle;
                 answerForDocumentKey.DocumentPage = searchResult.DocumentPage;
-                answerForDocumentKey.DocumentUrl = searchResult.DocumentUrl;
+                answerForDocumentKey.DocumentSourceUrl = searchResult.DocumentSourceUrl;
             }
         }
         return response;
