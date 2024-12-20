@@ -6,6 +6,7 @@ public class SearchAnswer
     public string? SearchIndexKey { get; set; }
     public string? DocumentId { get; set; }
     public string? DocumentTitle { get; set; }
+    public string? DocumentPage { get; set; }
     public double? Score { get; set; }
     public string? Text { get; set; }
 }
