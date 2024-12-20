@@ -1,6 +1,7 @@
 using Azure.AISearch.WebApp.Models;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
+using System.Text.RegularExpressions;
 
 namespace Azure.AISearch.WebApp.Services;
 
@@ -188,7 +189,7 @@ public class AzureCognitiveSearchService : ISearchService
             var match = Regex.Match(searchResult.DocumentPage, @"#page=(\d+)");
             if (match.Success)
             {
-                searchResult.DocumentPage = match.Groups[1].Value;
+            searchResult.DocumentPage = match.Groups[1].Value;
             }
         }
         // Add to source URL
