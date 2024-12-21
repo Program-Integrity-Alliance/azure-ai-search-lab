@@ -82,23 +82,23 @@ public class AzureOpenAISearchService : ISearchService
             throw new InvalidOperationException("Azure OpenAI didn't return a meaningful response.");
         }
 
-        //if (answerMessage.AzureExtensionsContext != null)
-        //{
+        if (answerMessage.AzureExtensionsContext != null)
+        {
             // Process citations within the answer, which take the form "[doc1][doc2]..." and refer to the (1-based) index of
             // the citations in the tool message.
-            //var citationIndex = 0;
-            //foreach (var citation in answerMessage.AzureExtensionsContext.Citations)
-            //{
-            //    answerText = answerText.Replace($"[doc{++citationIndex}]", $"<cite>{citation.Title}{citation.Url}{citation.Filepath}</cite> XXX", StringComparison.OrdinalIgnoreCase);
-            //    searchResponse.SearchResults.Add(new SearchResult
-            //    {
-            //        DocumentId = citation.Filepath,
-            //        DocumentTitle = citation.Title,
-            //        DocumentSourceUrl = citation.Url,
-            //        Captions = string.IsNullOrWhiteSpace(citation.Content) ? Array.Empty<string>() : new[] { citation.Content }
-            //    });
-            //}
-        //}
+            var citationIndex = 0;
+            foreach (var citation in answerMessage.AzureExtensionsContext.Citations)
+            {
+                answerText = answerText.Replace($"[doc{++citationIndex}]", $"<cite>{citation.Title}</cite>", StringComparison.OrdinalIgnoreCase);
+                searchResponse.SearchResults.Add(new SearchResult
+                {
+                    DocumentId = citation.Filepath,
+                    DocumentTitle = citation.Title,
+                    DocumentSourceUrl = citation.Url,
+                    Captions = string.IsNullOrWhiteSpace(citation.Content) ? Array.Empty<string>() : new[] { citation.Content }
+                });
+            }
+        }
 
         searchResponse.Answers = new[] { new SearchAnswer { Text = answerText } };
         searchResponse.History.Add(answerText);
